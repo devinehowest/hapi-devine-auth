@@ -21,7 +21,7 @@ server.register({
   register: require(`hapi-devine-auth`),
 
   options: {
-    issuer: 'web-client', // token issuer (required)
+    issuer: 'http://localhost:3000', // token issuer (required)
     secret: 'uiuGIU67383tuihiueeeuoih3368982676jhvuygoioo' // token secret (required)
   }
 
