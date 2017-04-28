@@ -1,6 +1,6 @@
 {
   "name": "hapi-devine-auth",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "🔧  This Hapi plugin adds authentication options to request, reply and server",
   "main": "index.js",
   "repository": "devinehowest/hapi-devine-auth",
@@ -16,5 +16,9 @@
     "eslint": "^3.19.0",
     "eslint-config-devine": "^1.7.1",
     "release-it": "^2.7.1"
+  },
+  "dependencies": {
+    "hapi-auth-jwt": "^4.0.0",
+    "jsonwebtoken": "^7.4.0"
   }
 }
