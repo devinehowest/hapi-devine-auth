@@ -1,4 +1,5 @@
 const jwt = require(`jsonwebtoken`);
+const uuid = require(`uuid`);
 
 module.exports.register = (server, options, next) => {
 
@@ -37,6 +38,8 @@ module.exports.register = (server, options, next) => {
 
       subject = `${subject}`;
 
+      const jwtid = uuid.v4();
+
       const token = jwt.sign(
         user,
         secret,
@@ -44,7 +47,8 @@ module.exports.register = (server, options, next) => {
           expiresIn,
           issuer,
           audience,
-          subject
+          subject,
+          jwtid
         }
       );
 
