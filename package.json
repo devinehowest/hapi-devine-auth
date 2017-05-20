@@ -1,6 +1,6 @@
 {
   "name": "hapi-devine-auth",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "description": "🔧  This Hapi plugin adds authentication options to request, reply and server",
   "main": "index.js",
   "repository": "devinehowest/hapi-devine-auth",

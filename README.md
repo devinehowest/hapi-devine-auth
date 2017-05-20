@@ -22,7 +22,8 @@ server.register({
 
   options: {
     issuer: 'http://localhost:3000', // token issuer (required)
-    secret: 'uiuGIU67383tuihiueeeuoih3368982676jhvuygoioo' // token secret (required)
+    secret: 'uiuGIU67383tuihiueeeuoih3368982676jhvuygoioo', // token secret (required)
+    authModel: () => require(`mongoose`).models.User; // function that returns a valid auth Model (1 scope field, 1 password field, >= 1 login fields)
   }
 
 }, pluginHandler);
