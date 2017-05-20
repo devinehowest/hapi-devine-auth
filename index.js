@@ -1,12 +1,17 @@
 const jwt = require(`jsonwebtoken`);
 const uuid = require(`uuid`);
 
+const routes = require(`./lib/routes`);
+
+const chalk = require(`chalk`);
+const logRoute = require(`./lib/logRoute`);
+
 module.exports.register = (server, options, next) => {
 
-  const {issuer, secret} = options;
+  const {issuer, secret, authModel, log = true} = options;
 
-  if (!issuer || !secret) throw new Error(
-    `'issuer' and 'secret' are required`
+  if (!issuer || !secret || !authModel) throw new Error(
+    `'issuer', 'secret' and 'authModel' are required`
   );
 
   server.register(require(`hapi-auth-jwt`), err => {
@@ -32,7 +37,11 @@ module.exports.register = (server, options, next) => {
 
     });
 
-    server.decorate(`reply`, `token`, function(user, {subject, audience, expiresIn = `7d`} = {}) {
+    server.decorate(`request`, `token`, function() {
+      return this.auth.credentials;
+    });
+
+    server.decorate(`reply`, `token`, function(user, {subject, audience, expiresIn = `7d`, notBefore} = {}) {
 
       const reply = this;
 
@@ -46,6 +55,7 @@ module.exports.register = (server, options, next) => {
         {
           expiresIn,
           issuer,
+          notBefore,
           audience,
           subject,
           jwtid
@@ -60,9 +70,18 @@ module.exports.register = (server, options, next) => {
       issuer
     }});
 
-  });
+    const r = routes(authModel);
+    server.route(r);
 
-  next();
+    if (log) console.log(``);
+    console.log(`${chalk.yellow(`hapi-devine-auth`)}: registered routes:`);
+    if (log) console.log(``);
+    r.forEach(rr => logRoute(rr));
+    if (log) console.log(``);
+
+    next();
+
+  });
 
 };
 
